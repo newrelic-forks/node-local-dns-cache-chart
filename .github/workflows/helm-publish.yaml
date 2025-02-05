@@ -76,10 +76,10 @@ jobs:
           cmd: yq eval -i '. |= .entries[][] |= .urls[0] = "https://" + env(REGISTRY) + "/" + .name + ":" + .version' index.yaml
       - name: Create Pull Request
         id: cpr
-        uses: sanjaykkr/create-pull-request@v7
+        uses: sanjaykkr/node-local-dns-cache-chart@v7
         with:
           commit-message: "Updating index.yaml for ${{ github.ref }}"
-          branch: node-local-dns-chart
+          branch: update-index
           delete-branch: true
           title: "[stable/index] Updating index.yaml for ${{ github.ref }}"
           add-paths: |

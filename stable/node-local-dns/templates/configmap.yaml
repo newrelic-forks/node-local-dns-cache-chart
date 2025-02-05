@@ -53,7 +53,11 @@ data:
         errors
     {{- if .Values.config.cache.enabled }}
     {{- if .Values.config.prefetch.enabled}}
-        cache 30 {
+    {{- if .Values.config.cache.ttl }}
+        cache {{ .Values.config.cache.ttl }} {
+    {{- else }}
+        cache {
+    {{- end }}
                 prefetch {{ .Values.config.prefetch.amount }} {{ .Values.config.prefetch.duration }} {{ .Values.config.prefetch.percentage }}
         }
     {{- else }}
@@ -81,7 +85,11 @@ data:
         errors
     {{- if .Values.config.cache.enabled }}
     {{- if .Values.config.prefetch.enabled}}
-        cache 30 {
+    {{- if .Values.config.cache.ttl }}
+        cache {{ .Values.config.cache.ttl }} {
+    {{- else }}
+        cache {
+    {{- end }}
                 prefetch {{ .Values.config.prefetch.amount }} {{ .Values.config.prefetch.duration }} {{ .Values.config.prefetch.percentage }}
         }
     {{- else }}
@@ -112,7 +120,11 @@ data:
         errors
     {{- if .Values.config.cache.enabled }}
     {{- if .Values.config.prefetch.enabled}}
-        cache 30 {
+    {{- if .Values.config.cache.ttl }}
+        cache {{ .Values.config.cache.ttl }} {
+    {{- else }}
+        cache {
+    {{- end }}
                 prefetch {{ .Values.config.prefetch.amount }} {{ .Values.config.prefetch.duration }} {{ .Values.config.prefetch.percentage }}
         }
     {{- else }}

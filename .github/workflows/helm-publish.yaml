@@ -21,19 +21,19 @@ jobs:
         uses: azure/setup-helm@v4
         with:
           version: v3.16.4
-      - name: Import GPG key
-        id: import_gpg
-        uses: crazy-max/ghaction-import-gpg@v6
-        with:
-          gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
-          passphrase: ${{ secrets.GPG_PASSPHRASE }}
-      - name: Save GPG passphrase and legacy keyring
-        run: |
-          cat << EOF > passphrase.txt
-          ${{ secrets.GPG_PASSPHRASE }}
-          EOF
-          gpg -o ~/.gnupg/pubring.gpg --export ${{ steps.import_gpg.outputs.keyid }}
-          gpg  --batch --pinentry-mode loopback --passphrase $(cat passphrase.txt) -o ~/.gnupg/secring.gpg --export-secret-keys ${{ steps.import_gpg.outputs.keyid }}
+#      - name: Import GPG key
+#        id: import_gpg
+#        uses: crazy-max/ghaction-import-gpg@v6
+#        with:
+#          gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
+#          passphrase: ${{ secrets.GPG_PASSPHRASE }}
+#      - name: Save GPG passphrase and legacy keyring
+#        run: |
+#          cat << EOF > passphrase.txt
+#          ${{ secrets.GPG_PASSPHRASE }}
+#          EOF
+#          gpg -o ~/.gnupg/pubring.gpg --export ${{ steps.import_gpg.outputs.keyid }}
+#          gpg  --batch --pinentry-mode loopback --passphrase $(cat passphrase.txt) -o ~/.gnupg/secring.gpg --export-secret-keys ${{ steps.import_gpg.outputs.keyid }}
       - name: Package Helm Charts
         shell: bash
         run: |
@@ -44,30 +44,29 @@ jobs:
                   continue
               fi
               echo "Packaging chart: $d"
-              helm package --sign "$d" -u --key "${{ steps.import_gpg.outputs.name }}" --passphrase-file passphrase.txt --keyring ~/.gnupg/secring.gpg
+              helm package "$d"
           done
-          rm passphrase.txt
           echo "Packing done"
-      - name: Login to GitHub Container Registry
-        shell: bash
-        run: echo "${GITHUB_TOKEN}" | helm registry login ${REGISTRY} --username ${GITHUB_ACTOR} --password-stdin
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-      - name: Push Helm Charts to Github Container Registry as OCI packages
-        shell: bash
-        run: |
-          for f in *.tgz ; do
-              echo "$f"
-              helm push $f oci://${REGISTRY,,}
-          done
-      - name: Upload the Chart to Rekor
-        shell: bash
-        run: |
-          helm plugin install https://github.com/sigstore/helm-sigstore
-          for f in *.tgz ; do
-              echo "Running sigstore upload for chart: $f"
-              helm sigstore upload "$f"
-          done
+#      - name: Login to GitHub Container Registry
+#        shell: bash
+#        run: echo "${GITHUB_TOKEN}" | helm registry login ${REGISTRY} --username ${GITHUB_ACTOR} --password-stdin
+#        env:
+#          GITHUB_TOKEN: ${{ github.token }}
+#      - name: Push Helm Charts to Github Container Registry as OCI packages
+#        shell: bash
+#        run: |
+#          for f in *.tgz ; do
+#              echo "$f"
+#              helm push $f oci://${REGISTRY,,}
+#          done
+#      - name: Upload the Chart to Rekor
+#        shell: bash
+#        run: |
+#          helm plugin install https://github.com/sigstore/helm-sigstore
+#          for f in *.tgz ; do
+#              echo "Running sigstore upload for chart: $f"
+#              helm sigstore upload "$f"
+#          done
       - name: Generate Helm repo index.yaml
         shell: bash
         run: helm repo index . --merge index.yaml

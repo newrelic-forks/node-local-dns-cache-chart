@@ -2,7 +2,7 @@ name: Helm Publish
 on:
   push:
     branches:
-      - master
+      - node-local-dns-chart
     paths:
       - 'stable/**'
   workflow_dispatch:

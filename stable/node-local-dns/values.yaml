@@ -37,7 +37,7 @@ config:
   prefetch:
     enabled: false
     amount: 3
-    duration: 30s
+    duration: 60s
     percentage: 20%
 
   # -- Port used for the health endpoint

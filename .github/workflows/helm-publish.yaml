@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 env:
   CHARTS_PATH: stable
-  REGISTRY: "ghcr.io/${{ github.repository }}"
+  REGISTRY: "newrelic-forks.github.io/${{ github.repository }}"
 jobs:
   package-and-release:
     permissions:
@@ -73,13 +73,13 @@ jobs:
       - name: Update URLs in index.yaml with yq
         uses: mikefarah/yq@v4.44.6
         with:
-          cmd: yq eval -i '. |= .entries[][] |= .urls[0] = "oci://" + env(REGISTRY) + "/" + .name + ":" + .version' index.yaml
+          cmd: yq eval -i '. |= .entries[][] |= .urls[0] = "https://" + env(REGISTRY) + "/" + .name + ":" + .version' index.yaml
       - name: Create Pull Request
         id: cpr
-        uses: peter-evans/create-pull-request@v7
+        uses: sanjaykkr/create-pull-request@v7
         with:
           commit-message: "Updating index.yaml for ${{ github.ref }}"
-          branch: update-index
+          branch: node-local-dns-chart
           delete-branch: true
           title: "[stable/index] Updating index.yaml for ${{ github.ref }}"
           add-paths: |

@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 env:
   CHARTS_PATH: stable
-  REGISTRY: "github.com/newrelic-forks/${{ github.repository }}"
+  REGISTRY: "github.com/${{ github.repository }}"
 jobs:
   package-and-release:
     permissions:

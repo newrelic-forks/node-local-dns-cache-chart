@@ -138,7 +138,7 @@ data:
     {{- else }}
         bind 0.0.0.0
     {{- end }}
-        forward . __PILLAR__UPSTREAM__SERVERS__
+        forward . __PILLAR__CLUSTER__DNS__
         prometheus :9253
     {{- if .Values.config.noIPv6Lookups }}
         template IN AAAA {

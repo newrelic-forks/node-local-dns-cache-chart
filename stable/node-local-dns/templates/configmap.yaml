@@ -21,7 +21,7 @@ data:
     {{- if .Values.config.enableLogging }}
         {{- if .Values.config.disableNoErrorLogs }}
         log . "{remote}:{port} - {>id} \"{type} {class} {name} {proto} {size} {>do} {>bufsize}\" {rcode} {>rflags} {rsize} {duration}" {
-            class denial error
+            class error
         }
         {{- else }}
         log
@@ -123,7 +123,7 @@ data:
     {{- if .Values.config.enableLogging}}
         {{- if .Values.config.disableNoErrorLogs }}
         log . "{remote}:{port} - {>id} \"{type} {class} {name} {proto} {size} {>do} {>bufsize}\" {rcode} {>rflags} {rsize} {duration}" {
-            class denial error
+            class error
         }
         {{- else }}
         log

@@ -53,10 +53,10 @@ helm install my-release oci://ghcr.io/deliveryhero/helm-charts/node-local-dns -f
 | config.commProtocol | string | `"force_tcp"` | Set communication protocol. Options are `prefer_udp` or `force_tcp` |
 | config.customConfig | string | `""` | Overrides the generated configuration with specified one. |
 | config.customUpstreamsvc | string | `""` | Use a custom upstreamsvc for -upstreamsvc |
+| config.disableNoErrorLogs | bool | `false` | Set boolean to disable NOERROR logs specifically (requires enableLogging to be true) |
 | config.dnsDomain | string | `"cluster.local"` | Internal k8s DNS domain |
 | config.dnsServer | string | `"172.20.0.10"` | Main coredns service (kube-dns) ip, used on iptables-mode. |
 | config.enableLogging | bool | `false` | Set boolean to log DNS requests |
-| config.disableNoErrorLogs | bool | `false` | Set boolean to disable NOERROR logs specifically (requires enableLogging to be true) |
 | config.healthPort | int | `8080` | Port used for the health endpoint |
 | config.localDns | string | `"169.254.20.25"` |  |
 | config.noIPv6Lookups | bool | `false` | If true, return NOERROR when attempting to resolve an IPv6 address |

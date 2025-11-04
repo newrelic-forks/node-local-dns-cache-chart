@@ -19,7 +19,13 @@ data:
     {{- else }}
     {{ .Values.config.dnsDomain }}:53 {
     {{- if .Values.config.enableLogging }}
+        {{- if .Values.config.disableNoErrorLogs }}
+        log . "{remote}:{port} - {>id} \"{type} {class} {name} {proto} {size} {>do} {>bufsize}\" {rcode} {>rflags} {rsize} {duration}" {
+            class denial error
+        }
+        {{- else }}
         log
+        {{- end }}
     {{- end }}
         errors
     {{- if .Values.config.cache.enabled }}
@@ -115,7 +121,13 @@ data:
         }
     .:53 {
     {{- if .Values.config.enableLogging}}
+        {{- if .Values.config.disableNoErrorLogs }}
+        log . "{remote}:{port} - {>id} \"{type} {class} {name} {proto} {size} {>do} {>bufsize}\" {rcode} {>rflags} {rsize} {duration}" {
+            class denial error
+        }
+        {{- else }}
         log
+        {{- end }}
     {{- end }}
         errors
     {{- if .Values.config.cache.enabled }}

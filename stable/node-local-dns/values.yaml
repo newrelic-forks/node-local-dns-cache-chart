@@ -25,6 +25,9 @@ config:
   # -- Set boolean to log DNS requests
   enableLogging: false
 
+  # -- Set boolean to disable NOERROR logs specifically (requires enableLogging to be true)
+  disableNoErrorLogs: true
+
   # -- If true, return NOERROR when attempting to resolve an IPv6 address
   noIPv6Lookups: false
 

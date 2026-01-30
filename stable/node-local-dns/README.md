@@ -1,6 +1,6 @@
 # node-local-dns
 
-![Version: 2.1.5](https://img.shields.io/badge/Version-2.1.5-informational?style=flat-square) ![AppVersion: 1.23.1](https://img.shields.io/badge/AppVersion-1.23.1-informational?style=flat-square)
+![Version: 2.1.6](https://img.shields.io/badge/Version-2.1.6-informational?style=flat-square) ![AppVersion: 1.26.7](https://img.shields.io/badge/AppVersion-1.26.7-informational?style=flat-square)
 
 A chart to install node-local-dns.
 
@@ -23,7 +23,7 @@ helm install --generate-name oci://ghcr.io/deliveryhero/helm-charts/node-local-d
 To install a specific version of this chart:
 
 ```console
-helm install --generate-name oci://ghcr.io/deliveryhero/helm-charts/node-local-dns --version 2.1.4
+helm install --generate-name oci://ghcr.io/deliveryhero/helm-charts/node-local-dns --version 2.1.6
 ```
 
 To install the chart with the release name `my-release`:
@@ -50,6 +50,7 @@ helm install my-release oci://ghcr.io/deliveryhero/helm-charts/node-local-dns -f
 |-----|------|---------|-------------|
 | affinity | object | `{}` |  |
 | config.bindIp | bool | `false` | If false, it will bind 0.0.0.0, otherwise dnsServer and localDns will be used. https://github.com/bottlerocket-os/bottlerocket/issues/3711#issuecomment-1907087528 |
+| config.cache | object | `{"enabled":false,"ttl":""}` | If enabled, coredns will cache the items |
 | config.commProtocol | string | `"force_tcp"` | Set communication protocol. Options are `prefer_udp` or `force_tcp` |
 | config.customConfig | string | `""` | Overrides the generated configuration with specified one. |
 | config.customUpstreamsvc | string | `""` | Use a custom upstreamsvc for -upstreamsvc |
@@ -60,7 +61,7 @@ helm install my-release oci://ghcr.io/deliveryhero/helm-charts/node-local-dns -f
 | config.healthPort | int | `8080` | Port used for the health endpoint |
 | config.localDns | string | `"169.254.20.25"` |  |
 | config.noIPv6Lookups | bool | `false` | If true, return NOERROR when attempting to resolve an IPv6 address |
-| config.prefetch | object | `{"amount":3,"duration":"30s","enabled":false,"percentage":"20%"}` | If enabled, coredns will prefetch popular items when they are about to be expunged from the cache. https://coredns.io/plugins/cache/ |
+| config.prefetch | object | `{"amount":3,"duration":"60s","enabled":false,"percentage":"20%"}` | If enabled, coredns will prefetch popular items when they are about to be expunged from the cache. https://coredns.io/plugins/cache/ |
 | config.setupInterface | bool | `true` |  |
 | config.setupIptables | bool | `true` |  |
 | config.skipTeardown | bool | `false` |  |
